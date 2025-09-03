@@ -1,8 +1,7 @@
 INFO-B 211 — Assignment 1: Object Oriented Programming
 Purpose
 
-The purpose of this project is to practice Object Oriented Programming (OOP) in Python by modeling a used-car inventory system.
-We use a real dataset of used cars (USA_cars_dataset.csv from Kaggle) to build classes for cars and sellers, and then interact with the data through a simple menu program.
+The purpose of this project is to practice Object Oriented Programming (OOP) in Python by modeling a used-car inventory system. We use a real dataset of used cars (USA_cars_dataset.csv from Kaggle) to build classes for cars and sellers, then interact with the data through a simple menu-driven program.
 
 Learning Goals
 
@@ -18,55 +17,71 @@ Gain experience with GitHub documentation and version control
 
 Project Structure
 
-info-b211-assignment1/
-├── car.py # Car class
-├── seller.py # Seller class
-├── inventory_loader.py # Loads cars from CSV into Car objects
-├── app.py # Menu-driven program to use the classes
-├── README.md # Documentation (this file)
-├── CHATLOG.md # AI usage log (academic honesty)
-└── data/
-└── USA_cars_dataset.csv # Kaggle dataset (place here manually)
+car.py — Car class
+seller.py — Seller class
+inventory_loader.py — Loads cars from CSV into Car objects
+app.py — Menu-driven program (main entry point)
+README.md — Documentation (this file)
+CHATLOG.md — AI usage log (academic honesty)
+data/USA_cars_dataset.csv — Kaggle dataset (place here manually)
 
 Car (car.py)
 
-Attributes:
-
-manufacturer, model, year, mileage, engine, transmission, drivetrain, mpg (optional), exterior_color, interior_color, accident, price
+Attributes: manufacturer, model, year, mileage, engine, transmission, drivetrain, mpg (optional), exterior_color, interior_color, accident, price
 
 Methods:
 
-Paint(color) → change exterior color
+Paint(color): change exterior color
 
-Repair(part, replacement) → update engine, transmission, or drivetrain
+Repair(part, replacement): update engine, transmission, or drivetrain
 
-Reupholster(color) → change interior color
+Reupholster(color): change interior color
 
-Drive(miles) → add miles to odometer
+Drive(miles): add miles to odometer
 
-Modify_Price(value) → if value >= 1 set exact price, if value < 1 apply discount (asks to confirm)
+Modify_Price(value): if value >= 1 set exact price, if value < 1 apply discount (asks to confirm)
 
 Seller (seller.py)
 
-Attributes:
-
-name, rating (default 4.5), inventory (list of Car objects)
+Attributes: name, rating (default 4.5), inventory (list of Car objects)
 
 Methods:
 
-Buy(car) → add car to inventory
+Buy(car): add car to inventory
 
-Sell(car) → remove car from inventory
+Sell(car): remove car from inventory
 
-list_brief() → show inventory in short format
+list_brief(): show inventory in short format
 
-Data Loading
+Data Loading (inventory_loader.py)
 
-The dataset is loaded with csv.DictReader (no external libraries like pandas).
-inventory_loader.py maps different possible column names to the correct fields.
-Examples: make or brand → manufacturer, odometer → mileage.
+Uses csv.DictReader (no external libraries).
 
-If a seller/dealer column exists, cars are grouped by that seller. If not, cars are spread across 5 default sellers.
+Handles flexible column names (e.g., make or brand → manufacturer).
+
+Groups cars by seller_name if present. If missing, cars are distributed across 5 default sellers.
+
+Main Program (app.py)
+
+Loads cars and groups them by seller.
+
+Startup can show a debug summary if DEBUG = True.
+
+Provides a text-based menu to interact with the data.
+
+Menu options:
+
+List sellers
+
+Show a seller’s inventory
+
+Modify a car (Paint / Repair / Reupholster / Drive / Modify Price)
+
+Move a car between sellers (Sell → Buy)
+
+Quit
+
+Extra feature: search sellers by name. Enter a keyword to find matching sellers (e.g., “Toyota”) and view their inventory.
 
 How to Run
 
@@ -74,72 +89,46 @@ Download the dataset from Kaggle: USA Cars Dataset (Andrei Novikov)
 
 Place the CSV in the data/ folder as data/USA_cars_dataset.csv
 
-Run the program:
-python app.py
-
-Use the menu:
-
-[1] List sellers
-
-[2] Show a seller’s inventory
-
-[3] Modify a car (Paint, Repair, Reupholster, Drive, Modify Price)
-
-[4] Move a car between sellers (Sell -> Buy)
-
-[5] Quit
+Run the program with Python: python app.py data/USA_cars_dataset.csv
 
 Example Run
 
-Loaded 2499 cars into 5 sellers.
+Program loads all cars from the dataset.
 
-=== MENU ===
-[1] List sellers
-[2] Show a seller's inventory
-[3] Modify a car (Paint / Repair / Reupholster / Drive / Modify Price)
-[4] Move a car between sellers (Sell -> Buy)
-[5] Quit
-Choose: 1
+Shows seller count and car assignments (if DEBUG = True).
 
-Seller_1 | Rating 4.5 | 500 cars
-
-Seller_2 | Rating 4.5 | 500 cars
-...
+Menu appears with options to list sellers, view inventory, search, modify cars, or move cars between sellers.
 
 Error Handling & Robustness
 
-Drive: must be > 0 miles
+Drive: must be greater than 0 miles
 
 Repair: only accepts engine, transmission, or drivetrain
 
-Modify_Price: price must be positive; discounts require confirmation
+Modify_Price: must be positive; discounts require confirmation
 
-Missing data: replaced with "Unknown" or 0
+Missing data: replaced with “Unknown” or 0
 
 Documentation & AI Use
 
 Code is organized with comments and clear error messages.
 
-This README explains the project purpose, design, how to run, and limitations.
+This README explains project purpose, design, usage, and limitations.
 
-ChatGPT was used to help brainstorm class design and CSV loader logic. AI usage is documented in CHATLOG.md as required.
+ChatGPT was used to brainstorm class design and CSV loading logic. AI usage is documented in CHATLOG.md.
 
 Limitations
 
-If your dataset headers don’t match, update MAP in inventory_loader.py.
+If dataset headers differ, update MAP in inventory_loader.py.
 
-The program is text-based only (no GUI).
+Text-based only (no GUI).
 
 MPG is optional (shown as “n/a” if missing).
 
 Grading Criteria Check
 
-Functionality (50 pts): all required methods work
-
-Usability (10 pts): simple menu to test everything
-
-Robustness (10 pts): input checks and error handling
-
-Readability (10 pts): clean structure, comments, docstrings
-
-Documentation (20 pts): README + comments + AI usage log
+Functionality: all required methods implemented
+Usability: menu provides clear interaction
+Robustness: input checks and error handling included
+Readability: code is structured and commented
+Documentation: README and CHATLOG.md included
